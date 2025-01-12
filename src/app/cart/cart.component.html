@@ -1,0 +1,40 @@
+<div class="cart">
+    <div class="cart-header">
+      <h3>CART</h3>
+      <p class="noOfItems">{{ cart.products.length }} items</p>
+    </div>
+    
+    <hr class="divider" />
+    
+    <div class="cart-items">
+      <div class="cart-item" *ngFor="let item of cart.products">
+        <img [src]="'http://localhost:3000/images/' + item.productId.images[0]" [alt]="item.productId.name" class="item-image">
+        <div class="cart-item-details">
+          <h3>{{ item.productId.name }}</h3>
+          <div class="cart-detail">
+            <div class="quantity-control">
+              <button (click)="decrementItem(item.productId._id!)">-</button>
+              <p>{{ item.quantity }}</p>
+              <button (click)="incrementItem(item.productId._id!)">+</button>
+            </div>
+            <p class="price">${{ (item.productId.price * item.quantity) | number: '1.2-2' }}</p>
+            <button (click)="removeItem(item.productId._id!)" class="remove-item">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <hr class="divider" />
+    
+    <div class="cart-footer cart-header">
+      <h4>Total</h4>
+      <p class="total">${{ calculateTotal() | number: '1.2-2' }}</p>
+    </div>
+    
+    <button 
+      class="buy-btn" 
+      (click)="proceedToCheckout()" 
+      >
+      PROCEED TO BUY
+    </button>
+  </div>

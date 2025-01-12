@@ -1,0 +1,20 @@
+<div class="categories-container">
+<div class="categories">
+    <div class="category woman">
+    <a routerLink="/category/woman">
+        <div class="overlay"><span>WOMAN</span></div>
+    </a>
+    </div>
+    <div class="category man">
+    <a routerLink="/category/man">
+        <div class="overlay"><span>MAN</span></div>
+    </a>
+    </div>
+</div>
+</div>
+
+<section class="new-arrivals">
+<h2>New Arrivals</h2>
+ <app-product-scroller [products]="newArrivals" (addToCart)="handleAddToCart($event)"></app-product-scroller>
+</section>
+  

@@ -1,0 +1,253 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #130f40;
+  line-height: 1.6;
+}
+
+.category-page {
+  display: flex;
+  max-width: 1500px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  gap: 2.5rem;
+}
+
+.filter-section {
+  width: 25%;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+
+.filter-section h3 {
+  font-size: 1.8rem;
+  margin: 0 0 1.5rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+  color: #130f40;
+}
+
+.filter-group {
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+}
+
+.filter-group h4 {
+  font-size: 1.4rem;
+  margin: 0 0 1rem 0;
+  color: #666;
+}
+
+.filter-group input[type="number"] {
+  width: calc(50% - 0.5rem);
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+
+.filter-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+  padding: 0.4rem 0;
+  font-size: 1.4rem;
+}
+
+.filter-group button {
+  padding: 1rem 1.5rem;
+  margin-top: 1rem;
+  background: #ff7800;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  width:80%;
+  transition: all 0.3s ease;
+}
+
+.filter-group button:hover {
+  background: darkorange;
+  transform: translateY(-2px);
+}
+
+
+.product-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.sort-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.sort-section select {
+  padding: 0.8rem 1.2rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+
+/* Product Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Changed to exactly 3 columns */
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+.product-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  /* Remove any max-width constraints to ensure equal sizing */
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.15);
+}
+
+.product-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.product-card-content {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.product-card-content h4 {
+  font-size: 1.4rem;
+  margin: 0 0 1rem 0;
+}
+
+.product-card-content p {
+  color: #666;
+  font-size: 1.1rem;
+  margin: 0 0 1.2rem 0;
+}
+
+.add-to-cart {
+  width: 100%;
+  padding: 1rem;
+  margin-top: auto;
+  background: #ff7800;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 0 0 12px 12px;
+  transition: all 0.3s ease;
+}
+
+.add-to-cart:hover {
+  background: darkorange;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 0;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  padding: 1rem 1.5rem;
+  background: #ff7800;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pagination button:disabled {
+  background: #e0e0e0;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: darkorange;
+  transform: translateY(-2px);
+}
+
+/* Search Form */
+.search-form {
+  position: relative;
+  width: 100%;
+  max-width: 50rem;
+  height: 5rem;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+  margin: 1rem 0;
+}
+
+.search-form.active {
+  right: 2rem;
+  transition: all 0.4s ease;
+  z-index: 1000;
+}
+
+.search-form input {
+  height: 100%;
+  width: 100%;
+  background: none;
+  text-transform: none;
+  font-size: 1.4rem;
+  color: #130f40;
+  padding: 0 1.5rem;
+  border: none;
+}
+
+.search-form label {
+  font-size: 1.8rem;
+  padding: 0 1.5rem;
+  color: #130f40;
+  cursor: pointer;
+}
+
+.search-form label:hover {
+  color: #ff7800;
+}
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: 1fr; /* 1 column on mobile */
+  }
+  
+  .category-page {
+    flex-direction: column;
+  }
+  
+  .filter-section {
+    width: 100%;
+  }
+}

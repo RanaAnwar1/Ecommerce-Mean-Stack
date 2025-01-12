@@ -1,0 +1,101 @@
+<div class="add-category-container">
+    <header class="page-header">
+      <h1>Add New Category</h1>
+      <p class="subtitle">Create a new category with subcategories</p>
+    </header>
+  
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="category-form">
+      <div class="form-grid">
+        <div class="form-section main-info">
+          <div class="form-group">
+            <label for="name">Category Name *</label>
+            <input 
+              id="name" 
+              type="text" 
+              formControlName="name" 
+              placeholder="Enter category name"
+              [class.error]="nameControl!.invalid && nameControl!.touched">
+            
+            <div class="error-message" *ngIf="nameControl!.invalid && nameControl!.touched">
+              <span *ngIf="nameControl!.errors?.['required']">Name is required</span>
+              <span *ngIf="nameControl!.errors?.['minlength']">Name must be at least 3 characters</span>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label>Category Image *</label>
+            <div class="image-upload-container" 
+                 [class.has-image]="imagePreview"
+                 [class.error]="categoryForm.get('image')!.invalid && categoryForm.get('image')!.touched">
+              
+              <div class="image-preview" *ngIf="imagePreview">
+                <img [src]="imagePreview" alt="Category preview">
+                <button type="button" class="remove-image" (click)="categoryForm.patchValue({image: null}); imagePreview = null">
+                  ×
+                </button>
+              </div>
+  
+              <div class="upload-placeholder" *ngIf="!imagePreview">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <span>Click or drag image here</span>
+                <span class="file-types">Supports: JPG, PNG, GIF</span>
+              </div>
+  
+              <input 
+                type="file" 
+                accept="image/*" 
+                (change)="onImageChange($event)"
+                [class.error]="categoryForm.get('image')!.invalid && categoryForm.get('image')!.touched">
+            </div>
+            <div class="error-message" *ngIf="categoryForm.get('image')!.invalid && categoryForm.get('image')!.touched">
+              Image is required
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-section subcategories">
+          <div class="section-header">
+            <h2>Subcategories</h2>
+            <button type="button" class="add-subcategory" (click)="addSubCategory()">
+              Add Subcategory
+            </button>
+          </div>
+  
+          <div formArrayName="subCategories" class="subcategories-list">
+            <div *ngFor="let subCategory of subCategories.controls; let i=index" 
+                 [formGroupName]="i" 
+                 class="subcategory-item">
+              <input 
+                type="text" 
+                formControlName="name" 
+                placeholder="Enter subcategory name"
+                [class.error]="subCategory.get('name')!.invalid && subCategory.get('name')!.touched">
+              
+              <button type="button" class="remove-subcategory" (click)="removeSubCategory(i)">
+                Remove
+              </button>
+  
+              <div class="error-message" *ngIf="subCategory.get('name')!.invalid && subCategory.get('name')!.touched">
+                Subcategory name is required
+              </div>
+            </div>
+  
+            <div class="empty-state" *ngIf="subCategories.length === 0">
+              No subcategories added yet. Click "Add Subcategory" to create one.
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" routerLink="/categories">
+          Cancel
+        </button>
+        <button type="submit" class="btn-primary" [disabled]="categoryForm.invalid || isSubmitting">
+          <span class="spinner" *ngIf="isSubmitting"></span>
+          {{ isSubmitting ? 'Creating...' : 'Create Category' }}
+        </button>
+      </div>
+    </form>
+  </div>
+  

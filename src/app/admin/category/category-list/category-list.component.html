@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="header">
+        <h2>Category Management</h2>
+        <button class="btn btn-add" (click)="onAdd()">
+            <i class="fas fa-plus"></i>
+            Add Category
+        </button>
+    </div>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Category ID</th>
+                    <th>Name</th>
+                    <th>Create Date</th>
+                    <th>Update Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let category of categories">
+                    <td>{{category._id}}</td>
+                    <td>{{category.name}}</td>
+                    <td>{{category.createdAt | date:'mediumDate'}}</td>
+                    <td>{{category.updatedAt | date:'mediumDate'}}</td>
+                    <td>
+                        <div class="actions">
+                            <button class="btn btn-view" (click)="onView(category._id!)">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                            <button class="btn btn-edit" (click)="onEdit(category._id!)">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </button>
+                            <button class="btn btn-delete" (click)="onDelete(category._id!)">
+                                <i class="fas fa-trash"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

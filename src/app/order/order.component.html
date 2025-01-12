@@ -1,0 +1,83 @@
+<div class="container">
+  <h2>Checkout</h2>
+  <form [formGroup]="checkoutForm" class="checkout-form">
+    <div class="items-section">
+      <h3>Ordered Items</h3>
+      <div class="item" *ngFor="let item of cart.products">
+        <img [src]="'http://localhost:3000/images/' + item.productId.images[0]" [alt]="item.productId.name" class="item-image">
+        <div class="item-details">
+          <h4>{{ item.productId.name }}</h4>
+        </div>
+        <div class="item-price">${{ (item.productId.price * item.quantity) | number: '1.2-2' }}</div>
+      </div>
+    </div>
+
+    <div class="total">
+      <h3>Total Price: ${{ calculateTotal() | number: '1.2-2' }}</h3>
+    </div>
+
+    <div class="address-options">
+      <label>
+        <input
+          type="radio"
+          name="address"
+          (change)="showNewAddress = false"
+          checked
+        />
+        Use Saved Address
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="address"
+          (change)="showNewAddress = true"
+        />
+        Add New Address
+      </label>
+    </div>
+    <div class="saved-addresses" *ngIf="!showNewAddress">
+      <h3>Choose a Saved Address</h3>
+      <div class="address-list">
+        <label *ngFor="let address of savedAddresses; let i = index">
+          <input
+            type="radio"
+            name="savedAddress"
+            [value]="address"
+            (change)="selectAddress(address)"
+            [checked]="selectedAddress === address"
+          />
+          {{ address.street }}, {{ address.city }}
+        </label>
+      </div>
+    </div>
+   
+    <div class="billing-address" *ngIf="showNewAddress">
+      <div class="address-form-group">
+        <label for="address1">Address</label>
+        <input type="text" formControlName="street" placeholder="123 Main St">
+      </div>
+      <div class="address-form-group">
+        <label for="apartmentNumber">Apartment Number</label>
+        <input type="text" formControlName="apartmentNumber" placeholder="12">
+      </div>
+      <div class="address-form-group">
+        <label for="floorNumber">Floor Number</label>
+        <input type="text" formControlName="floorNumber" placeholder="1">
+      </div>
+      <div class="address-form-group">
+        <label for="city">City</label>
+        <input type="text" formControlName="city" placeholder="Cairo">
+      </div>
+      <div class="address-form-group">
+        <label for="zip">Zip Code</label>
+        <input type="text" formControlName="zipCode" placeholder="12345">
+      </div>
+      <div class="address-form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" formControlName="phoneNumber" placeholder="01234567890">
+      </div>
+    </div>
+
+    <button type="button" [disabled]="!checkoutForm.valid" (click)="placeOrder()" class="place-order">Place Order</button>
+  </form>
+</div>

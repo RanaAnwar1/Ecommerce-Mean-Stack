@@ -1,0 +1,113 @@
+
+<div class="order-details" *ngIf="!loading">
+    <div class="header">
+      <div class="title-section">
+        <h1>Order Details</h1>
+        <span class="order-id">Order #{{order?._id}}</span>
+      </div>
+      <button (click)="toggleMode()" class="btn-primary" *ngIf="!saving">
+        {{ mode === 'view' ? 'Edit Status' : 'View Order' }}
+      </button>
+    </div>
+
+    <div *ngIf="mode === 'view'" class="view-mode">
+
+      <section class="info-section">
+        <h2>Order Information</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">Status</span>
+            <span [class]="'status-badge ' + getStatusClass(order?.orderStatus!)">
+              {{order?.orderStatus}}
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="label">Order Date</span>
+            <span class="value">{{formatDate(order?.createdAt!)}}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Delivery Date</span>
+            <span class="value">{{formatDate(order?.deliveryDate!)}}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Last Updated</span>
+            <span class="value">{{formatDate(order?.updatedAt!)}}</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="info-section">
+        <h2>Customer Information</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">User ID</span>
+            <span class="value">{{order?.userId}}</span>
+          </div>
+        
+          <div class="info-item">
+            <span class="label">Phone</span>
+            <span class="value">{{order?.phoneNumber}}</span>
+          </div>
+        </div>
+      </section>
+  
+      
+      <section class="info-section">
+        <h2>Delivery Address</h2>
+        <div class="address-details">
+          <p>{{order?.address?.street}}</p>
+          <p>Floor: {{order?.address?.floorNumber}}</p>
+          <p *ngIf="order?.address?.apartmentNumber">Apt: {{order?.address?.apartmentNumber}}</p>
+          <p>{{order?.address?.city}}</p>
+          <p *ngIf="order?.address?.zipCode">ZIP: {{order?.address?.zipCode}}</p>
+        </div>
+      </section>
+  
+       <section class="info-section">
+        <h2>Order Items</h2>
+        <div class="products-list">
+          <div class="product-item" *ngFor="let product of order?.products">
+            <div class="product-image">
+              <img [src]="'http://localhost:3000/images/' + product.productId.images[0]" [alt]="product.productId.name">
+            </div>
+            <div class="product-details">
+              <h3>{{product.productId!.name}}</h3>
+              <p class="quantity">Quantity: {{product.quantity}}</p>
+              <p class="price">Price: {{product.priceAtPurchase | currency}}</p>
+              <p class="subtotal">Subtotal: {{calculateSubtotal(product.priceAtPurchase, product.quantity) | currency}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="order-total">
+          <span class="label">Total Amount</span>
+          <span class="value">{{order?.totalBillAmount | currency}}</span>
+        </div>
+      </section>
+    </div>
+  
+   
+    <div *ngIf="mode === 'edit'" class="edit-mode">
+      <form [formGroup]="statusForm" (ngSubmit)="onSubmit()">
+        <section class="info-section">
+          <h2>Update Order Status</h2>
+          <div class="form-field">
+            <label for="orderStatus">Order Status</label>
+            <select id="orderStatus" formControlName="orderStatus">
+              <option *ngFor="let status of orderStatuses" [value]="status">
+                {{status}}
+              </option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button type="submit" [disabled]="!statusForm.valid || saving" class="btn-primary">
+              {{saving ? 'Updating...' : 'Update Status'}}
+            </button>
+          </div>
+        </section>
+      </form>
+    </div>
+  </div>
+  
+  <div class="loading" *ngIf="loading">
+    Loading order details...
+  </div>

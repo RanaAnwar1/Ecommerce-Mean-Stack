@@ -1,0 +1,31 @@
+<div 
+  class="product-card" 
+  [class.hovered]="isHovered"
+  (mouseenter)="isHovered = true"
+  (mouseleave)="isHovered = false"
+  (click)="navigateToProductDetails(product._id!)"
+>
+  <div class="product-image-container">
+    <img 
+      [src]="'http://localhost:3000/images/'+ product.images[0]" 
+      [alt]="product.name"
+      class="product-image"
+      (error)="onImageError($event)"
+    >
+  </div>
+
+  <div class="product-info">
+    <h3 class="product-name">{{ product.name }}</h3>
+    
+    <div class="product-price">
+      {{ product.price }}
+    </div>
+
+    <button 
+      class="add-to-cart-btn"
+      (click)="onAddToCart($event)"
+    >
+      Add to Cart
+    </button>
+  </div>
+</div>

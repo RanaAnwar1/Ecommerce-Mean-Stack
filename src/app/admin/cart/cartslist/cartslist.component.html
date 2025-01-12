@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="header">
+        <h2>Cart Management</h2>
+    </div>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Cart ID</th>
+                    <th>User ID</th>
+                    <th>Created Date</th>
+                    <th>Updated Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cart of carts">
+                    <td>{{cart._id}}</td>
+                    <td>{{cart.userId}}</td>
+                    <td>{{cart.createdAt | date:'mediumDate'}}</td>
+                    <td>{{cart.updatedAt | date:'mediumDate'}}</td>
+                    <td>
+                        <div class="actions">
+                            <button class="btn btn-view" (click)="onView(cart._id!)">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                            <button class="btn btn-delete" (click)="onDelete(cart._id!)">
+                                <i class="fas fa-trash"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

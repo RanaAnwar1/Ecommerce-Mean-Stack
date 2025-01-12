@@ -1,0 +1,32 @@
+<div class="product-scroller-wrapper">
+    <div class="product-scroller-container">
+      <button 
+        class="scroll-btn left" 
+        (click)="scrollLeft()"
+        aria-label="Scroll left"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+  
+      <div class="product-scroller" #scroller>
+        <div class="product-wrapper" *ngFor="let product of products">
+          <app-product 
+            [product]="product"
+            (addToCart)="onAddToCart($event)"
+          ></app-product>
+        </div>
+      </div>
+  
+      <button 
+        class="scroll-btn right" 
+        (click)="scrollRight()"
+        aria-label="Scroll right"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </button>
+    </div>
+  </div>

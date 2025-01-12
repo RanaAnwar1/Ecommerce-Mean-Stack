@@ -1,0 +1,71 @@
+
+<div class="role-details-container">
+    <div class="header">
+      <h2>Role Details</h2>
+      <div class="mode-indicator">{{ isEditMode ? 'Edit Mode' : 'View Mode' }}</div>
+    </div>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+  
+    <ng-container *ngIf="role">
+      
+      <div *ngIf="!isEditMode" class="view-mode">
+        <div class="detail-row">
+          <label>Role Name:</label>
+          <span>{{ role.name }}</span>
+        </div>
+        <div class="detail-row">
+          <label>Created At:</label>
+          <span>{{ formatDate(role.createdAt!) }}</span>
+        </div>
+        <div class="detail-row">
+          <label>Last Updated:</label>
+          <span>{{ formatDate(role.updatedAt!) }}</span>
+        </div>
+        <div class="actions">
+          <button class="edit-button" (click)="onEdit()">Edit Role</button>
+        </div>
+      </div>
+  
+      
+      <form *ngIf="isEditMode" [formGroup]="roleForm" (ngSubmit)="onSubmit()" class="edit-mode">
+        <div class="form-group">
+          <label for="name">Role Name:</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            [class.error]="roleForm.get('name')!.invalid && roleForm.get('name')!.touched"
+          >
+          <div class="error-message" *ngIf="roleForm.get('name')!.invalid && roleForm.get('name')!.touched">
+            <span *ngIf="roleForm.get('name')!.errors?.['required']">Role name is required</span>
+            <span *ngIf="roleForm.get('name')!.errors?.['minlength']">Role name must be at least 3 characters</span>
+          </div>
+        </div>
+  
+        <div class="form-info">
+          <div class="detail-row">
+            <label>Created At:</label>
+            <span>{{ formatDate(role.createdAt!) }}</span>
+          </div>
+          <div class="detail-row">
+            <label>Last Updated:</label>
+            <span>{{ formatDate(role.updatedAt!) }}</span>
+          </div>
+        </div>
+  
+        <div class="actions">
+          <button type="submit" [disabled]="roleForm.invalid">
+            Save Changes
+          </button>
+          <button type="button" class="cancel-button" (click)="onCancel()">Cancel</button>
+        </div>
+      </form>
+    </ng-container>
+  </div>

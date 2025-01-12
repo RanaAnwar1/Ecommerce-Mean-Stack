@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col">
+    <div class="contacts">
+      <h1>CONTACTS</h1>
+      <ng-container *ngIf="!loading; else loadingTemplate">
+        <div class="address" *ngIf="contactInfo">
+          <i class="fa-solid fa-location-dot"></i>
+          <div class="contact-info">
+            <h3>ADDRESS</h3>
+            <p>{{ contactInfo.address }}</p>
+          </div>
+        </div>
+        <div class="phone" *ngIf="contactInfo">
+          <i class="fa-solid fa-phone"></i>
+          <div class="contact-info">
+            <h3>PHONE</h3>
+            <p>{{ contactInfo.phone }}</p>
+          </div>
+        </div>
+        <div class="hours" *ngIf="contactInfo">
+          <i class="fa-regular fa-clock"></i>
+          <div class="contact-info">
+            <h3>HOURS</h3>
+            <p>{{ contactInfo.hours }}</p>
+          </div>
+        </div>
+      </ng-container>
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="col">
+    <div class="contactForm">
+      <h1>GET IN TOUCH WITH US</h1>
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <input type="text" placeholder="Name" formControlName="name" class="area" />
+        <input type="email" placeholder="Email" formControlName="email" class="area" />
+        <textarea placeholder="Message" formControlName="message" class="area"></textarea>
+        <button type="submit" [disabled]="!contactForm.valid">SUBMIT</button>
+      </form>
+    </div>
+  </div>
+  <div class="col">
+    <div class="contactSocialMedia">
+      <h1>FOLLOW US</h1>
+      <div class="facebook">
+        <i class="fa-brands fa-facebook"></i>
+        <a href="https://www.facebook.com/">FOLLOW US ON FACEBOOK</a>
+      </div>
+      <div class="instagram">
+        <i class="fa-brands fa-instagram"></i>
+        <a href="https://www.instagram.com/">FOLLOW US ON INSTAGRAM</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <div class="loading">Loading contact information...</div>
+</ng-template>

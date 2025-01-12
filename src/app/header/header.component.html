@@ -1,0 +1,40 @@
+<header class="header">
+  <a routerLink="/home" class="logo"><i class="fas fa-shopping-basket"></i>E-commerce</a>
+
+  <nav class="navbar" [class.active]="isMenuOpen" *ngIf="!isAdmin">
+    <a routerLink="/home">Home</a>
+    <div class="dropdown">
+      <a>Categories</a>
+      <div class="dropdown-menu">
+        <a *ngFor="let category of categories" [routerLink]="['/category', category.name.toLowerCase()]">
+          {{ category.name }}
+        </a>
+      </div>
+    </div>
+    <a routerLink="/about">About Us</a>
+    <a routerLink="/contact">Contact Us</a>
+  </nav>
+
+  <div class="icons">
+    <div class="fas fa-bars" id="menu-btn" (click)="toggleMenu()"></div>
+    <a routerLink="/cart" *ngIf="!isAdmin">
+      <div class="fas fa-shopping-cart"></div>
+    </a>
+    <div class="profile-dropdown">
+      <div class="profile" (click)="toggleDropdown()">
+        <div class="fas fa-user"></div>
+      </div>
+      <ul class="profile-menu" [class.show]="isDropdownOpen">
+        <li *ngIf="!isLoggedIn">
+          <a routerLink="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+        </li>
+        <li *ngIf="isLoggedIn">
+          <a routerLink="/profile"><i class="fas fa-user"></i> Profile</a>
+        </li>
+        <li *ngIf="isLoggedIn">
+          <a (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>

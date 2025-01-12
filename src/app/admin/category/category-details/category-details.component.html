@@ -1,0 +1,110 @@
+<div class="category-container">
+    <div class="header">
+      <h2>Category Details</h2>
+      <div class="mode-indicator">
+        <span [class.active]="isEditMode">{{ isEditMode ? 'Edit Mode' : 'View Mode' }}</span>
+      </div>
+    </div>
+  
+    <ng-container *ngIf="!isEditMode; else editTemplate">
+      <div class="category-details">
+        <div class="image-section">
+          <img [src]="'http://localhost:3000/images/' + category.image" [alt]="category.name">
+        </div>
+  
+        <div class="details-section">
+          <div class="detail-row">
+            <label>ID:</label>
+            <span>{{ category._id }}</span>
+          </div>
+  
+          <div class="detail-row">
+            <label>Name:</label>
+            <span>{{ category.name }}</span>
+          </div>
+  
+          <div class="detail-row">
+            <label>Status:</label>
+            <div class="status-indicators">
+              <span class="status" [class.active]="category.isActive">
+                {{ category.isActive ? 'Active' : 'Inactive' }}
+              </span>
+              <span class="status" [class.deleted]="category.isDeleted">
+                {{ category.isDeleted ? 'Deleted' : 'Not Deleted' }}
+              </span>
+            </div>
+          </div>
+  
+          <div class="subcategories-section">
+            <h3>Subcategories</h3>
+            <ul class="subcategories-list">
+              <li *ngFor="let sub of category.subcategories">
+                {{ sub.name }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  
+    <ng-template #editTemplate>
+      <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="edit-form">
+        <div class="form-content">
+            <div class="image-section">
+              <ng-container *ngIf="imagePreview; else noImage">
+                <img [src]="imagePreview" alt="Category Image" />
+              </ng-container>
+              <ng-template #noImage>
+                <p>No image available</p>
+              </ng-template>
+              <input type="file" (change)="onImageChange($event)" accept="image/*" />
+            </div>
+          
+          <div class="details-section">
+            <div class="form-group">
+              <label>ID:</label>
+              <span>{{ category._id }}</span>
+            </div>
+  
+            <div class="form-group">
+              <label for="name">Name:</label>
+              <input id="name" type="text" formControlName="name">
+            </div>
+  
+            <div class="form-group">
+              <label>Status:</label>
+              <div class="status-toggles">
+                <button type="button" 
+                        [class.active]="categoryForm.get('isActive')?.value"
+                        (click)="toggleState('isActive')">
+                  {{ categoryForm.get('isActive')?.value ? 'Active' : 'Inactive' }}
+                </button>
+                <button type="button" 
+                        [class.deleted]="categoryForm.get('isDeleted')?.value"
+                        (click)="toggleState('isDeleted')">
+                  {{ categoryForm.get('isDeleted')?.value ? 'Deleted' : 'Not Deleted' }}
+                </button>
+              </div>
+            </div>
+  
+            <div class="subcategories-section">
+              <h3>Subcategories</h3>
+              <div formArrayName="subcategories">
+                <div *ngFor="let sub of subCategories.controls; let i = index" 
+                     [formGroupName]="i" class="subcategory-item">
+                  <input type="text" formControlName="name" placeholder="Subcategory Name">
+                  <button type="button" class="remove-btn" (click)="removeSubCategory(i)">Remove</button>
+                </div>
+              </div>
+              <button type="button" class="add-btn" (click)="addSubCategory()">Add Subcategory</button>
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-actions">
+          <button type="submit" [disabled]="!categoryForm.valid">Save Changes</button>
+          <button type="button" routerLink="/admin/categories">Cancel</button>
+        </div>
+      </form>
+    </ng-template>
+  </div>

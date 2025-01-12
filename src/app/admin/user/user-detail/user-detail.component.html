@@ -1,0 +1,185 @@
+
+<div class="user-details-container">
+    <div class="header">
+      <h1>{{isEditMode ? 'Edit' : 'View'}} User Details</h1>
+      <div class="actions" *ngIf="!isEditMode">
+        
+        <button class="btn-outline" (click)="onCancel()">
+          Back to Users
+        </button>
+      </div>
+    </div>
+  
+    <form  [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form" >
+    
+      <section class="form-section">
+        <h2>Personal Information</h2>
+        
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="firstName">First Name</label>
+            <input 
+              id="firstName" 
+              type="text" 
+              formControlName="firstName"
+              [class.error]="userForm.get('firstName')!.invalid && userForm.get('firstName')!.touched">
+            <div class="error-message" *ngIf="userForm.get('firstName')!.invalid && userForm.get('firstName')!.touched">
+              {{getErrorMessage(userForm.get('firstName'), 'First Name')}}
+            </div>
+          </div>
+  
+          <div class="form-field">
+            <label for="lastName">Last Name</label>
+            <input 
+              id="lastName" 
+              type="text" 
+              formControlName="lastName"
+              [class.error]="userForm.get('lastName')!.invalid && userForm.get('lastName')!.touched">
+            <div class="error-message" *ngIf="userForm.get('lastName')!.invalid && userForm.get('lastName')!.touched">
+              {{getErrorMessage(userForm.get('lastName'), 'Last Name')}}
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input 
+            id="email" 
+            type="email" 
+            formControlName="email"
+            [class.error]="userForm.get('email')!.invalid && userForm.get('email')!.touched">
+          <div class="error-message" *ngIf="userForm.get('email')!.invalid && userForm.get('email')!.touched">
+            {{getErrorMessage(userForm.get('email'), 'Email')}}
+          </div>
+        </div>
+  
+        <div class="form-field">
+          <label for="phoneNumber">Phone Number</label>
+          <input 
+            id="phoneNumber" 
+            type="tel" 
+            formControlName="phoneNumber"
+            [class.error]="userForm.get('phoneNumber')!.invalid && userForm.get('phoneNumber')!.touched">
+          <div class="error-message" *ngIf="userForm.get('phoneNumber')!.invalid && userForm.get('phoneNumber')!.touched">
+            {{getErrorMessage(userForm.get('phoneNumber'), 'Phone Number')}}
+          </div>
+        </div>
+  
+        <div class="form-field">
+          <label for="roleId">Role</label>
+          <select 
+            id="roleId" 
+            formControlName="roleId"
+            [class.error]="userForm.get('roleId')!.invalid && userForm.get('roleId')!.touched">
+            <option value="">Select Role</option>
+            <option *ngFor="let role of roles" [value]="role._id">
+              {{role.name}}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="userForm.get('roleId')!.invalid && userForm.get('roleId')!.touched">
+            {{getErrorMessage(userForm.get('roleId'), 'Role')}}
+          </div>
+        </div>
+      </section>
+  
+  
+      <section class="form-section">
+        <div class="section-header">
+          <h2>Addresses</h2>
+          <button *ngIf="isEditMode" type="button" class="btn-secondary" (click)="addAddress()">
+            Add Address
+          </button>
+        </div>
+  
+        <div formArrayName="address" class="addresses-container">
+          <div *ngFor="let addressForm of addressFormArray.controls; let i=index" 
+               [formGroupName]="i" 
+               class="address-form">
+            <h3>Address {{i + 1}}</h3>
+            
+            <button *ngIf="isEditMode && addressFormArray.length > 1" 
+                    type="button" 
+                    class="btn-remove" 
+                    (click)="removeAddress(i)">
+              Remove
+            </button>
+  
+            <div class="form-field">
+              <label [for]="'street' + i">Street</label>
+              <input 
+                [id]="'street' + i" 
+                type="text" 
+                formControlName="street"
+                [class.error]="addressForm.get('street')!.invalid && addressForm.get('street')!.touched">
+              <div class="error-message" *ngIf="addressForm.get('street')!.invalid && addressForm.get('street')!.touched">
+                {{getErrorMessage(addressForm.get('street'), 'Street')}}
+              </div>
+            </div>
+  
+            <div class="form-grid">
+              <div class="form-field">
+                <label [for]="'floorNumber' + i">Floor Number</label>
+                <input 
+                  [id]="'floorNumber' + i" 
+                  type="number" 
+                  formControlName="floorNumber"
+                  [class.error]="addressForm.get('floorNumber')!.invalid && addressForm.get('floorNumber')!.touched">
+                <div class="error-message" *ngIf="addressForm.get('floorNumber')!.invalid && addressForm.get('floorNumber')!.touched">
+                  {{getErrorMessage(addressForm.get('floorNumber'), 'Floor Number')}}
+                </div>
+              </div>
+  
+              <div class="form-field">
+                <label [for]="'apartmentNumber' + i">Apartment Number</label>
+                <input 
+                  [id]="'apartmentNumber' + i" 
+                  type="number" 
+                  formControlName="apartmentNumber"
+                  [class.error]="addressForm.get('apartmentNumber')!.invalid && addressForm.get('apartmentNumber')!.touched">
+                <div class="error-message" *ngIf="addressForm.get('apartmentNumber')!.invalid && addressForm.get('apartmentNumber')!.touched">
+                  {{getErrorMessage(addressForm.get('apartmentNumber'), 'Apartment Number')}}
+                </div>
+              </div>
+            </div>
+  
+            <div class="form-grid">
+              <div class="form-field">
+                <label [for]="'city' + i">City</label>
+                <input 
+                  [id]="'city' + i" 
+                  type="text" 
+                  formControlName="city"
+                  [class.error]="addressForm.get('city')!.invalid && addressForm.get('city')!.touched">
+                <div class="error-message" *ngIf="addressForm.get('city')!.invalid && addressForm.get('city')!.touched">
+                  {{getErrorMessage(addressForm.get('city'), 'City')}}
+                </div>
+              </div>
+  
+              <div class="form-field">
+                <label [for]="'zipCode' + i">ZIP Code</label>
+                <input 
+                  [id]="'zipCode' + i" 
+                  type="text" 
+                  formControlName="zipCode"
+                  [class.error]="addressForm.get('zipCode')!.invalid && addressForm.get('zipCode')!.touched">
+                <div class="error-message" *ngIf="addressForm.get('zipCode')!.invalid && addressForm.get('zipCode')!.touched">
+                  {{getErrorMessage(addressForm.get('zipCode'), 'ZIP Code')}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <div class="form-actions" *ngIf="isEditMode">
+        <button type="button" class="btn-outline" (click)="onCancel()">
+          Cancel
+        </button>
+        <button type="submit" 
+                class="btn-primary" 
+                [disabled]="!userForm.valid">
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </div>

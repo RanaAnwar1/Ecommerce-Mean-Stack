@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="header">
+        <h2>Order Management</h2>
+    </div>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Email</th>
+                    <th>Create Date</th>
+                    <th>Update Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of orders">
+                    <td>{{order._id}}</td>
+                    <td>{{order.userId}}</td>
+                    <td>{{order.createdAt | date:'mediumDate'}}</td>
+                    <td>{{order.updatedAt | date:'mediumDate'}}</td>
+                    <td>{{order.totalBillAmount | currency}}</td>
+                    <td>
+                        <span class="status-badge" [ngClass]="getStatusClass(order.orderStatus)">
+                            {{order.orderStatus}}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <button class="btn btn-view" (click)="onView(order._id!)">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                            <button class="btn btn-edit" (click)="onEdit(order._id!)">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </button>
+                            <button class="btn btn-delete" (click)="onDelete(order._id!)">
+                                <i class="fas fa-trash"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

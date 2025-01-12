@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="header">
+        <h2>Product Management</h2>
+        <button class="btn btn-add" (click)="onAdd()">
+            <i class="fas fa-plus"></i>
+            Add Product
+        </button>
+    </div>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Create Date</th>
+                    <th>Update Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of products">
+                    <td>{{product._id}}</td>
+                    <td>{{product.name}}</td>
+                    <td class="capitalize">{{getCategoryName(product.categoryId)}}</td>
+                    <td>{{product.createdAt | date:'mediumDate'}}</td>
+                    <td>{{product.updatedAt | date:'mediumDate'}}</td>
+                    <td>
+                        <div class="actions">
+                            <button class="btn btn-view" (click)="onView(product._id!)">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                            <button class="btn btn-edit" (click)="onEdit(product._id!)">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </button>
+                            <button class="btn btn-delete" (click)="onDelete(product._id!)">
+                                <i class="fas fa-trash"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

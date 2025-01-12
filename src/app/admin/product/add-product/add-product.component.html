@@ -1,0 +1,124 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
+    <div class="form-section">
+      <h2>Basic Information</h2>
+      
+      <div class="form-field">
+        <label for="name">Product Name</label>
+        <input id="name" type="text" formControlName="name">
+        <div class="error" *ngIf="productForm.get('name')!.errors?.['required'] && productForm.get('name')!.touched">
+          Name is required
+        </div>
+      </div>
+  
+      <div class="form-field">
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="description" rows="4"></textarea>
+        <div class="error" *ngIf="productForm.get('description')!.errors?.['required'] && productForm.get('description')!.touched">
+          Description is required
+        </div>
+      </div>
+  
+      <div class="form-field">
+        <label for="price">Price</label>
+        <input id="price" type="number" formControlName="price" min="0">
+        <div class="error" *ngIf="productForm.get('price')!.errors?.['required'] && productForm.get('price')!.touched">
+          Price is required
+        </div>
+      </div>
+  
+      <div class="form-field">
+        <label for="gender">Gender</label>
+        <select id="gender" formControlName="gender">
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+    </div>
+  
+    <div class="form-section">
+      <h2>Inventory</h2>
+      
+      <div formGroupName="inventory">
+        <div class="form-field">
+          <label>Total Inventory: {{productForm.get('inventory.total')!.value}}</label>
+        </div>
+  
+        <button type="button" (click)="addSize()" class="btn-secondary">Add Size</button>
+  
+        <div formArrayName="sizes">
+          <div *ngFor="let sizeForm of sizesFormArray.controls; let i=index" [formGroupName]="i" class="size-row">
+            <div class="form-field">
+              <input type="text" formControlName="size" placeholder="Size">
+            </div>
+            <div class="form-field">
+              <input type="number" formControlName="quantity" placeholder="Quantity" min="0" 
+                     (input)="updateTotalInventory()">
+            </div>
+            <button type="button" (click)="removeSize(i)" class="btn-danger">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="form-section">
+      <h2>Images</h2>
+      <div class="image-upload-container">
+        <input type="file" accept="image/*" (change)="onImageSelect($event)" 
+               [disabled]="imageFiles.length >= 5">
+        <p class="helper-text">Maximum 5 images allowed</p>
+        
+        <div class="image-previews">
+          <div *ngFor="let preview of imagePreviewUrls; let i=index" class="image-preview">
+            <img [src]="preview" alt="Product preview">
+            <button type="button" (click)="removeImage(i)" class="btn-danger">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="form-section">
+      <h2>Additional Information</h2>
+      
+      <div class="form-field">
+        <label for="categoryId">Category</label>
+        <select id="categoryId" formControlName="categoryId" (change)="onCategoryChange($event)">
+          <option value="">Select Category</option>
+          <option *ngFor="let category of categories" [value]="category._id">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+      
+      <div class="form-field">
+        <label for="subcategoryId">Subcategory</label>
+        <select id="subcategoryId" formControlName="subcategoryId">
+          <option value="">Select Subcategory</option>
+          <option *ngFor="let subcategory of subcategories" [value]="subcategory._id">
+            {{ subcategory.name }}
+          </option>
+        </select>
+      </div>
+      
+  
+      <div class="form-field checkbox">
+        <label>
+          <input type="checkbox" formControlName="isActive">
+          Active Product
+        </label>
+      </div>
+  
+      <div class="form-field checkbox">
+        <label>
+          <input type="checkbox" formControlName="newArrival">
+          New Arrival
+        </label>
+      </div>
+    </div>
+  
+    <div class="form-actions">
+      <button type="submit" [disabled]="!productForm.valid || imageFiles.length === 0" class="btn-primary">
+        Save Product
+      </button>
+    </div>
+  </form>

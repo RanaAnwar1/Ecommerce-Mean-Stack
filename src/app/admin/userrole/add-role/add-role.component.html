@@ -1,0 +1,28 @@
+
+<div class="add-role-container">
+    <h2>Add New Role</h2>
+    
+    <form [formGroup]="roleForm" (ngSubmit)="onSubmit()" class="role-form">
+      <div class="form-group">
+        <label for="name">Role Name:</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          placeholder="Enter role name"
+        >
+        <div class="error-message" *ngIf="roleForm.get('name')!.invalid && roleForm.get('name')!.touched">
+          <span *ngIf="roleForm.get('name')!.errors?.['required']">Role name is required</span>
+          <span *ngIf="roleForm.get('name')!.errors?.['minlength']">Role name must be at least 3 characters</span>
+        </div>
+      </div>
+  
+      <div class="button-container">
+        <button type="submit" [disabled]="roleForm.invalid">
+          Create Role
+        </button>
+      </div>
+  
+      
+    </form>
+  </div>

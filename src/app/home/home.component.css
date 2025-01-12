@@ -1,0 +1,213 @@
+:root {
+    --orange: #ff7800;
+    --black: #130f40;
+    --light-color: #666;
+    --box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .1);
+    --border: .2rem solid rgba(0, 0, 0, .1);
+    --outline: .1rem solid rgba(0, 0, 0, .1);
+    --outline-hover: .2rem solid var(--black);
+  }
+  
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: var(--black);
+  }
+  
+  .categories-container {
+    overflow: hidden;
+  }
+  
+  .categories {
+    display: flex;
+    width: 100%;
+    height: 900px;
+  }
+  
+  .category {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  .category a {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+  }
+  
+  .category.woman {
+    background: url('https://media.istockphoto.com/id/1387549302/photo/caucasian-woman-portrait-in-black-and-white.jpg?s=612x612&w=0&k=20&c=EoY0iPCfin1QvS72jQDTxlscdeyu1MEFdYcuS_AjJ-w=') no-repeat center/cover;
+  }
+  
+  .category.man {
+    background: url('https://media.istockphoto.com/id/648366374/photo/handsome-traveler.jpg?s=612x612&w=0&k=20&c=LWiJBBBxEaWuwh9hLDNOYaZbJBO69nlUBu8bsPlycP8=') no-repeat center/cover;
+  }
+  
+  .category:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .overlay span {
+    font-size: 2rem;
+    color: #fff;
+    border: var(--border);
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  
+  .new-arrivals {
+    padding: 40px 20px;
+    background-color: whitesmoke;
+    text-align: center;
+  }
+  
+  .new-arrivals h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: var(--black);
+  }
+  
+  .product-scroller-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .scroll-btn {
+    background-color: var(--orange);
+    color: #fff;
+    border: none;
+    font-size: 2rem;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+  
+  .scroll-btn:hover {
+    background-color: var(--black);
+  }
+  
+  .scroll-btn.left {
+    left: 10px;
+  }
+  
+  .scroll-btn.right {
+    right: 10px;
+  }
+  
+  .product-scroller-container {
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .product-scroller {
+    display: flex;
+    gap: 20px;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    padding-left: 0;
+    margin-left: 0;
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .product-card {
+    flex: 0 0 auto;
+    width: 350px;
+    background: #fff;
+    border: var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .product-card:first-child {
+    margin-left: 50px;
+  }
+  
+  .product-card:last-child {
+    margin-right: 50px;
+  }
+  
+  .product-card img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    object-fit: cover;
+    height: 250px;
+  }
+  
+  .product-card h3 {
+    font-size: 1.6rem;
+    margin: 10px 0;
+    color: var(--black);
+  }
+  
+  .product-card p {
+    font-size: 1.2rem;
+    margin: 5px 0;
+    color: var(--orange);
+    font-weight: bold;
+  }
+  
+  .product-card button {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    color: #fff;
+    background-color: var(--orange);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .product-card button:hover {
+    background-color: var(--black);
+  }
+  
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .product-card:active {
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: 768px) {
+    .product-card {
+      width: 280px;
+    }
+  
+    .scroll-btn {
+      padding: 10px;
+      font-size: 1.5rem;
+    }
+  }
+  

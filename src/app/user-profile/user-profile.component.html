@@ -1,0 +1,154 @@
+<div class="profile-container">
+    <div class="profile-card">
+      <h2>Update Profile</h2>
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+   
+        <div class="form-section">
+          <h3>Personal Information</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input 
+                id="firstName" 
+                type="text" 
+                formControlName="firstName"
+                [class.error]="isFieldInvalid('firstName')"
+              >
+              <div class="error-message" *ngIf="isFieldInvalid('firstName')">
+                First name is required
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input 
+                id="lastName" 
+                type="text" 
+                formControlName="lastName"
+                [class.error]="isFieldInvalid('lastName')"
+              >
+              <div class="error-message" *ngIf="isFieldInvalid('lastName')">
+                Last name is required
+              </div>
+            </div>
+          </div>
+  
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input 
+                id="email" 
+                type="email" 
+                formControlName="email"
+                [class.error]="isFieldInvalid('email')"
+              >
+              <div class="error-message" *ngIf="isFieldInvalid('email')">
+                Valid email is required
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber">Phone Number</label>
+              <input 
+                id="phoneNumber" 
+                type="tel" 
+                formControlName="phoneNumber"
+                [class.error]="isFieldInvalid('phoneNumber')"
+              >
+              <div class="error-message" *ngIf="isFieldInvalid('phoneNumber')">
+                Phone number is required
+              </div>
+            </div>
+          </div>
+        </div>
+  
+       
+        <div class="form-section">
+          <h3>Addresses</h3>
+          <div formArrayName="address">
+            <div *ngFor="let address of addresses.controls; let i=index" [formGroupName]="i" class="address-card">
+              <h4>Address {{i + 1}}</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label [for]="'street' + i">Street</label>
+                  <input 
+                    [id]="'street' + i" 
+                    type="text" 
+                    formControlName="street"
+                    [class.error]="isAddressFieldInvalid(i, 'street')"
+                  >
+                </div>
+                <div class="form-group">
+                  <label [for]="'city' + i">City</label>
+                  <input 
+                    [id]="'city' + i" 
+                    type="text" 
+                    formControlName="city"
+                    [class.error]="isAddressFieldInvalid(i, 'city')"
+                  >
+                </div>
+              </div>
+  
+              <div class="form-row">
+                <div class="form-group">
+                  <label [for]="'floorNumber' + i">Floor Number</label>
+                  <input 
+                    [id]="'floorNumber' + i" 
+                    type="number" 
+                    formControlName="floorNumber"
+                    [class.error]="isAddressFieldInvalid(i, 'floorNumber')"
+                  >
+                </div>
+                <div class="form-group">
+                  <label [for]="'apartmentNumber' + i">Apartment Number</label>
+                  <input 
+                    [id]="'apartmentNumber' + i" 
+                    type="number" 
+                    formControlName="apartmentNumber"
+                  >
+                </div>
+                <div class="form-group">
+                  <label [for]="'zipCode' + i">Zip Code</label>
+                  <input 
+                    [id]="'zipCode' + i" 
+                    type="number" 
+                    formControlName="zipCode"
+                  >
+                </div>
+              </div>
+  
+              <button type="button" class="remove-btn" (click)="removeAddress(i)" *ngIf="addresses.length > 1">
+                Remove Address
+              </button>
+            </div>
+          </div>
+          <button type="button" class="add-btn" (click)="addAddress()">
+            Add Another Address
+          </button>
+        </div>
+  
+        <div class="form-section">
+          <h3>Update Password</h3>
+          <div formGroupName="passwordUpdate">
+            <div class="form-row">
+              
+              <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input 
+                  id="newPassword" 
+                  type="password" 
+                  formControlName="newPassword"
+                >
+              </div>
+              
+            </div>
+          </div>
+        </div>
+  
+        <div class="button-group">
+          <button type="button" class="cancel-btn" (click)="onCancel()">Cancel</button>
+          <button type="submit" class="submit-btn" [disabled]="profileForm.invalid || profileForm.pristine">
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>

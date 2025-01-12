@@ -1,0 +1,74 @@
+<div class="product-container" *ngIf="!loading; else loadingTemplate">
+  <div class="product-gallery">
+    <div class="main-image-container">
+      <img 
+        [src]="mainImage" 
+        [alt]="product.name"
+        class="main-image"
+        
+      >
+    </div>
+    <div class="thumbnail-gallery">
+      <div 
+        *ngFor="let image of product.images" 
+        class="thumbnail"
+        [class.active]="mainImage === 'http://localhost:3000/images/' + image"
+        (click)="changeImage(image)"
+      >
+        <img 
+          [src]="'http://localhost:3000/images/' + image" 
+          [alt]="'Thumbnail of ' + product.name"
+          
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="product-info">
+    <h1 class="product-title">{{ product.name }}</h1>
+    
+    <div class="product-price">
+      <span class="price">{{ product.price | currency }}</span>
+    </div>
+
+    <div class="product-description">
+      <p>{{ product.description }}</p>
+    </div>
+
+    <div class="size-selector">
+      <label>Select Size</label>
+      <div class="size-options">
+        <button 
+          *ngFor="let size of product.inventory.sizes"
+          [class.selected]="selectedSize === size.size"
+          [class.out-of-stock]="size.quantity === 0"
+          [disabled]="size.quantity === 0"
+          (click)="selectSize(size.size)"
+          class="size-button"
+        >
+          {{ size.size.toUpperCase() }}
+          <span class="stock-status">{{ getStockStatus(size.quantity) }}</span>
+        </button>
+      </div>
+    </div>
+
+    <button 
+      class="add-to-cart-button"
+      [disabled]="!selectedSize"
+      (click)="addToCart()"
+    >
+      Add to Cart
+    </button>
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <div class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading product details...</p>
+  </div>
+</ng-template>
+
+<div *ngIf="error" class="error-container">
+  <p>{{ error }}</p>
+</div>

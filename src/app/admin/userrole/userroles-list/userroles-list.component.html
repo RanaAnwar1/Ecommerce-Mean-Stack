@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="header">
+        <h2>User Role Management</h2>
+        <button class="btn btn-add" (click)="onAdd()">
+            <i class="fas fa-plus"></i>
+            Add Role
+        </button>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Role ID</th>
+                    <th>Name</th>
+                    <th>Created Date</th>
+                    <th>Updated Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let role of roles">
+                    <td>{{role._id}}</td>
+                    <td>{{role.name}}</td>
+                    <td>{{role.createdAt | date:'mediumDate'}}</td>
+                    <td>{{role.createdAt | date:'mediumDate'}}</td>
+                    <td>
+                        <div class="actions">
+                            <button class="btn btn-view" (click)="onView(role._id!)">
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+                            <button class="btn btn-edit" (click)="onEdit(role._id!)">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </button>
+                            <button class="btn btn-delete" (click)="onDelete(role._id!)">
+                                <i class="fas fa-trash"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

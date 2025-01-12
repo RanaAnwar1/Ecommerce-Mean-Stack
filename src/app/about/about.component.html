@@ -1,0 +1,27 @@
+<div class="abtimage">
+    <img src="https://static.vecteezy.com/system/resources/previews/006/642/996/non_2x/online-shopping-on-website-e-commerce-or-mobile-phone-applications-and-digital-marketing-the-woman-is-shopping-on-mobile-phone-and-the-man-is-delivering-flat-design-concept-vector.jpg" alt="About Us Cover">
+    <h1>About Us</h1>
+  </div>
+  
+  <section class="qualities">
+    <h2>Why Choose Us?</h2>
+    <div class="qualities-container">
+      <div class="quality-item" *ngFor="let item of qualityItems">
+        <i [class]="item.icon"></i>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.description }}</p>
+      </div>
+    </div>
+  </section>
+  
+  <div class="whocontainer">
+    <div class="whoarewe">
+      <h1>Who We Are</h1>
+      <p>
+        {{aboutInfo}}
+      </p>
+    </div>
+    <div class="whoimage">
+      <img src="https://s3-ap-southeast-1.amazonaws.com/storage.virtualspirit.me/post/cover/322/Personalised_Shopping_Lists_in_E-commerce_Apps_Benefits_and_Examples.jpg" alt="Who We Are">
+    </div>
+  </div>
